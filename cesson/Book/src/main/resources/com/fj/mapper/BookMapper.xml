@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fj.mapper.BookMapper">
+
+    <select id="getBookListInfo" resultType="com.fj.entity.Book">
+         select * from bookFile
+    </select>
+
+    <select id="selectBookInfoById" parameterType="com.fj.entity.Book" resultType="com.fj.entity.Book">
+        select * from  bookFile
+        <where>
+            <if test="id !=null">
+                and id=#{id}
+            </if>
+            <if test="name !=null">
+                and name=#{name}
+            </if>
+        </where>
+    </select>
+
+    <delete id="delBookById" parameterType="Integer">
+        delete from bookFile where id=#{id}
+    </delete>
+
+    <update id="upBookInfoById" parameterType="com.fj.entity.Book">
+          update bookFile set name=#{name} where id=#{id}
+    </update>
+
+    <insert id="addBookInfo" parameterType="com.fj.entity.Book">
+        insert  into `bookFile`(`ISBN`,`name`,`price`,`discount`,`publisher`) values (#{ISBN},#{name},#{price},#{discount},#{publisher});
+    </insert>
+
+    <insert id="addBook" parameterType="com.fj.entity.Book">
+        <trim suffixOverrides=",">
+            insert  into `bookFile`(
+            <if test="ISBN !=null">
+                `ISBN`,
+            </if>
+            <if test="name !=null">
+                `name`,
+            </if>
+            <if test="price !=null">
+                `price`,
+            </if>
+            <if test="discount !=null">
+                `discount`,
+            </if>
+            <if test="publisher !=null">
+                publisher
+            </if>
+        </trim>
+        ) values (
+        <trim suffixOverrides=",">
+            <if test="ISBN !=null">
+                #{ISBN},
+            </if>
+            <if test="name !=null">
+                #{name},
+            </if>
+            <if test="price !=null">
+                #{price},
+            </if>
+            <if test="discount !=null">
+                #{discount},
+            </if>
+            <if test="publisher !=null">
+                #{publisher},
+            </if>
+        </trim>
+        )
+    </insert>
+
+    <update id="upBook" parameterType="com.fj.entity.Book">
+        update bookFile
+        <set>
+            <if test="ISBN!=null">
+                ISBN=#{ISBN},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="price!=null">
+                price=#{price},
+            </if>
+            <if test="discount!=null">
+                discount=#{discount},
+            </if>
+            <if test="publisher!=null">
+                publisher=#{publisher}，
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <resultMap id="getBook" type="com.fj.entity.Book">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="person.person_name" column="person_name"/>
+    </resultMap>
+
+    <select id="getBookInfo" resultMap="getBook" parameterType="Integer">
+        SELECT b1.id,b1.name,p1.person_name FROM three AS t1
+            INNER JOIN bookFile AS b1 ON t1.book_id=b1.id
+            INNER JOIN person AS p1 ON p1.person_id=t1.person_id
+        WHERE p1.person_id=#{id}
+    </select>
+
+    <select id="getBookInfo2" resultMap="getBook" parameterType="Integer">
+        SELECT b1.id,b1.name,p1.person_name FROM three AS t1
+        INNER JOIN bookFile AS b1 ON t1.book_id=b1.id
+        INNER JOIN person AS p1 ON p1.person_id=t1.person_id
+        WHERE b1.id=#{id} OR b1.id=#{id2}
+    </select>
+
+</mapper>
