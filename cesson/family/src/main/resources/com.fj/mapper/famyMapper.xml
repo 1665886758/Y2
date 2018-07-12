@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fj.mapper.famyMapper">
+
+    <resultMap id="husbandWithWife" type="com.fj.entity.husband">
+        <id property="id" column="id"/>
+        <result property="name" column="husband_name" />
+        <result property="wife.name" column="wife_name"/>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" parameterType="Integer" resultMap="husbandWithWife">
+        SELECT a.id,b.wife_name,c.husband_name FROM husband_wife AS a
+        LEFT JOIN wife AS b ON a.wife_id=b.wife_id
+        LEFT JOIN husband AS c ON c.husband_id=a.husband_id
+        WHERE id=#{id}
+    </select>
+
+    <resultMap id="husbandWithWife2" type="com.fj.entity.husband">
+        <id property="id" column="id"/>
+        <result property="name" column="husband_name" />
+        <association property="wife" javaType="com.fj.entity.wife">
+            <result property="name" column="wife_name"/>
+        </association>
+    </resultMap>
+
+    <select id="selectByPrimaryKey2" parameterType="Integer" resultMap="husbandWithWife2">
+        SELECT a.id,b.wife_name,c.husband_name FROM husband_wife AS a
+        LEFT JOIN wife AS b ON a.wife_id=b.wife_id
+        LEFT JOIN husband AS c ON c.husband_id=a.husband_id
+        WHERE id=#{id}
+    </select>
+
+    <!--<resultMap id="husbandWithWife3" type="com.fj.entity.husband">-->
+        <!--<id property="id" column="husband_id"/>-->
+        <!--<result property="name" column="husband_name" />-->
+        <!--<association property="wife" select="com.fj.mapper.famyMapper.selectByPrimaryKey" column="wife_name"></association>-->
+    <!--</resultMap>-->
+
+    <!--<select id="selectByPrimaryKey3" parameterType="Integer" resultMap="husbandWithWife3">-->
+        <!--SELECT a.husband_id,a.husband_name,b.wife_name FROM husband AS a-->
+        <!--LEFT JOIN wife AS b ON a.husband_id=b.husband_id-->
+        <!--WHERE a.husband_id=#{id}-->
+    <!--</select>-->
+</mapper>
