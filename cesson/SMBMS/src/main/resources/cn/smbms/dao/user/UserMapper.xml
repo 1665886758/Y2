@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.smbms.dao.user.UserMapper">
+
+    <resultMap id="baseUser" type="cn.smbms.pojo.User">
+        <id property="id" column="u_id"/>
+        <result property="userName" column="userName"/>
+        <result property="gender" column="gender"/>
+        <result property="birthday" column="birthday"/>
+        <result property="phone" column="phone"/>
+        <result property="userRole" column="userRole"/>
+        <result property="userCode" column="userCode"/>
+        <association property="role" javaType="cn.smbms.pojo.Role">
+            <result property="roleName" column="roleName"/>
+        </association>
+        <!--<result property="address" column="address"/>-->
+        <!--<result property="age" column="age"/>-->
+        <!--<result property="createdBy" column="createdBy"/>-->
+        <!--<result property="creationDate" column="creationDate"/>-->
+        <!--<result property="modifyBy" column="modifyBy"/>-->
+        <!--<result property="userCode" column="userCode"/>-->
+        <!--<result property="modifyDate" column="modifyDate"/>-->
+    </resultMap>
+
+    <!--登录-->
+    <select id="getLoginUser" resultType="cn.smbms.pojo.User" parameterType="cn.smbms.pojo.User">
+        SELECT id,userCode,userName,userPassword FROM smbms_user WHERE userCode=#{userCode} AND userPassword=#{userPassword}
+    </select>
+
+    <!--删除用户信息-->
+    <delete id="deleteUserById" parameterType="Integer">
+        DELETE FROM smbms_user WHERE id=#{id}
+    </delete>
+
+    <!--查询用户信息-->
+    <select id="getUserList" resultMap="baseUser" parameterType="cn.smbms.pojo.User">
+       SELECT  a.id as u_id,a.userCode,a.userName,a.gender,a.birthday,a.phone,b.roleName FROM smbms_user AS a
+       INNER JOIN smbms_role AS b ON a.userRole=b.id
+       <where>
+           <if test="userName!=null and userName!=''">
+            and a.userName LIKE CONCAT('%',#{userName},'%')
+           </if>
+           <if test="userRole !=null and userRole!=0 ">
+               and a.userRole=#{userRole}
+           </if>
+       </where>
+        LIMIT #{currentPageNo},#{pageSize}
+    </select>
+
+    <!--查询记录数-->
+    <select id="getUserCount" resultType="Integer" parameterType="cn.smbms.pojo.User">
+        SELECT COUNT(1) FROM smbms_user
+        <where>
+            <if test="userName !=null and userName!=''">
+                and userName LIKE CONCAT('%',#{userName},'%')
+            </if>
+            <if test="userRole !=null and userRole !=0 ">
+                and userRole=${userRole}
+            </if>
+        </where>
+    </select>
+
+    <insert id="add">
+        INSERT INTO `smbms_user`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userName != null">
+                userName,
+            </if>
+            <if test="modifyDate != null">
+                modifyDate,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="createdBy != null">
+                createdBy,
+            </if>
+            <if test="creationDate != null">
+                creationDate,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="modifyBy != null">
+                modifyBy,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="userCode != null">
+                userCode,
+            </if>
+            <if test="userPassword != null">
+                userPassword,
+            </if>
+            <if test=" userRole != null  ">
+                <if test="userRole != null">
+                    userRole,
+                </if>
+            </if>
+        </trim>
+
+        <trim suffix=")" prefix="values(" suffixOverrides=",">
+            <if test="userName != null">
+                #{userName},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+            <if test="birthday != null">
+                #{birthday},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy},
+            </if>
+            <if test="creationDate != null">
+                #{creationDate},
+            </if>
+            <if test="gender != null">
+                #{gender},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="userCode != null">
+                #{userCode},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword},
+            </if>
+            <if test=" userRole != null  ">
+                <if test="userRole != null">
+                    #{userRole},
+                </if>
+            </if>
+        </trim>
+    </insert>
+
+
+</mapper>
