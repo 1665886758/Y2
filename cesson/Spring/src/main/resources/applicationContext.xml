@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="greeting" class="com.pojo.Greeting">
+        <!--name值必须和setter后面的set名称保持一致-->
+        <property name="name" value="陈均"/>
+    </bean>
+    <!--构造注入-->
+    <bean id="greeting2" class="com.pojo.Greeting">
+        <constructor-arg name="name" value="李四"/>
+    </bean>
+
+    <bean id="girl" class="com.pojo.Girl">
+        <property name="name" value="杨紫"/>
+        <property name="loveColor" value="橙色"/>
+    </bean>
+
+    <bean id="gender" class="com.pojo.Boy">
+        <property name="name" value="李志刚"/>
+        <property name="girl" ref="girl"/>  <!--ref调用已经定义完成的Bean-->
+    </bean>
+
+</beans>
