@@ -3,7 +3,7 @@ package com.fj.dao.impl;
 import com.fj.dao.UserDao;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("userDaoImpl")
 public class UserDaoImpl implements UserDao {
 
     @Override
