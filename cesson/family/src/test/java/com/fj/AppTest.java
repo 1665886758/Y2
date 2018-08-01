@@ -45,18 +45,18 @@ public class AppTest
         }
     }
 
-    @Test
-    public void shouldAnswerWithTrue3()
-    {
-        SqlSession sqlSession=null;
-        try{
-            sqlSession= MyBatisUtil.sqlSessionOpen();
-            husband husband=sqlSession.getMapper(famyMapper.class).selectByPrimaryKey3(1);
-            System.out.println(husband);
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            sqlSession.close();
-        }
-    }
+//    @Test
+//    public void shouldAnswerWithTrue3()
+//    {
+//        SqlSession sqlSession=null;
+//        try{
+//            sqlSession= MyBatisUtil.sqlSessionOpen();
+//            husband husband=sqlSession.getMapper(famyMapper.class).selectByPrimaryKey3(1);
+//            System.out.println(husband);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }finally {
+//            sqlSession.close();
+//        }
+//    }
 }

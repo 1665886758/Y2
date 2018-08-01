@@ -11,14 +11,14 @@ public class BookTest {
     @Test
     public void Test(){
         ApplicationContext ctx=new ClassPathXmlApplicationContext("app01.xml");
-        BookService bookService=(BookService) ctx.getBean("bookService");
+        BookService bookService=ctx.getBean("bookService",BookService.class);
           //1.前置增强 2.后置增强
-//        bookService.bookInfo();
+          bookService.bookInfo();
           //3.异常抛出增强
 //        bookService.throwDemo();
           //4.最终增强
        // bookService.returnings("张浩");
            //5.环绕增强
-        bookService.login("admin","123");
+       // bookService.login("admin","123");
     }
 }

@@ -8,5 +8,5 @@ public interface famyMapper {
 
     public husband selectByPrimaryKey2(@Param("id") Integer id);
 
-    public husband selectByPrimaryKey3(@Param("id") Integer id);
+//    public husband selectByPrimaryKey3(@Param("id") Integer id);
 }

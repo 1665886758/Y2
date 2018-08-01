@@ -4,21 +4,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@Controller
+@RestController
 @RequestMapping("/upload")
 public class FileUploadController {
 
     private final String UPLOAD_ROOT_PATH="F:"+File.separator+"tempUpload";
 
     @RequestMapping("/m1")
-    @ResponseBody
     public String m1(@RequestParam("username")String username, @RequestParam("file") MultipartFile multipartFile){
 //        System.out.println("普通的表单域：" + username);
         //1.处理文件上传

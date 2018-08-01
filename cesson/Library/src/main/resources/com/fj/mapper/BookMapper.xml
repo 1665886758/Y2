@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fj.mapper.BookMapper">
+
+    <resultMap id="books" type="com.fj.pojo.Book">
+        <id property="id" column="id"/>
+        <result property="name" column="b_Name"/>
+        <result property="classification" column="b_classification"/>
+        <result property="tag" column="b_tag"/>
+        <result property="price" column="b_price"/>
+        <result property="kind" column="b_kind"/>
+    </resultMap>
+
+    <select id="bookInfo" resultMap="books">
+        SELECT id,b_Name,b_classification,b_tag,b_price,b_kind FROM book
+    </select>
+
+    <insert id="bookInsert" parameterType="com.fj.pojo.Book">
+        insert into book(b_Name,b_classification,b_tag,b_price,b_kind)values(#{name},#{classification},#{tag},#{price},#{kind})
+    </insert>
+
+    <update id="update" parameterType="com.fj.pojo.Book">
+        update book set  b_Name=#{name} where id=#{id}  <!--若使用对象参数,则参数需要相同于对像属性-->
+    </update>
+
+    <insert id="bookDel" parameterType="Integer">
+        delete from book where id=#{id}
+    </insert>
+</mapper>

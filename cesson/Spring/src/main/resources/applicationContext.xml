@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="greeting" class="com.pojo.Greeting">
+    <bean id="greeting" class="com.pojo.Greeting" p:name="陈均aaa">   <!--使用p命名空间位对象属性赋值-->
         <!--name值必须和setter后面的set名称保持一致-->
-        <property name="name" value="陈均"/>
+        <!--<property name="name" value="陈均"/>-->
     </bean>
     <!--构造注入-->
     <bean id="greeting2" class="com.pojo.Greeting">
-        <constructor-arg name="name" value="李四"/>
+        <constructor-arg name="name" value="李四"/>   <!--构造注入使用 constructor-arg -->
+        <!--<property name="name" value="aaa"/>-->
     </bean>
 
     <bean id="girl" class="com.pojo.Girl">
@@ -21,4 +23,15 @@
         <property name="girl" ref="girl"/>  <!--ref调用已经定义完成的Bean-->
     </bean>
 
+    <bean class="com.pojo.Car" id="car">
+        <!--
+
+            通过参数的数据类型方式进行描述往往是有风险的，充满不确定性
+            通过描述参数类型的指定顺序，可以消除二义性
+index="0"index="1"
+
+        -->
+        <constructor-arg type="java.lang.Double" index="1" value="33.0"/>
+        <constructor-arg type="java.lang.String" index="0" value="老爷车"/>
+    </bean>
 </beans>

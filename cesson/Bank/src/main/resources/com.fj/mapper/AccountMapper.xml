@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fj.mapper.AccountMapper">
+
+    <select id="isExistCardNo"  resultType="int" >
+        select count(*) from account where cardNo = #{cardNo}
+    </select>
+
+    <select id="checkCardNoPassword" parameterType="com.fj.pojo.Account" resultType="com.fj.pojo.Account" >
+        select * from account
+        <where>
+
+            <if test="cardNo != null">
+                and cardNo = #{cardNo}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+
+        </where>
+    </select>
+
+    <!--检查账号是否是可用（）-->
+    <select id="checkCardIsUseable"  resultType="int">
+      select status from account where cardNo = #{cardNo}
+    </select>
+
+    <!--检查转账余额是否足够-->
+    <select id="queryBalance" resultType="double">
+        select balance
+        from account
+        where cardNo = #{cardNo}
+    </select>
+
+    <update id="moneyOut">
+        update account
+        set balance = balance - #{money}
+        where cardNo = #{cardNo}
+    </update>
+
+    <update id="moneyIn">
+        update account
+        set balance = balance + #{money}
+        where cardNo = #{toCardNo}
+    </update>
+    <!--&lt;!&ndash;登录操作&ndash;&gt;-->
+    <!--<select id="bankLogin" parameterType="com.fj.pojo.Account" resultType="com.fj.pojo.Account">-->
+        <!--SELECT * FROM account WHERE cardNo=#{cardNo} AND password=#{password}-->
+    <!--</select>-->
+
+    <!--&lt;!&ndash;查询余额&ndash;&gt;-->
+    <!--<select id="bankBalanceInfo" parameterType="Integer" resultType="com.fj.pojo.Account">-->
+        <!--SELECT * FROM account WHERE id=#{id}-->
+    <!--</select>-->
+</mapper>

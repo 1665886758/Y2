@@ -1,6 +1,7 @@
 package com.fj;
 
 import com.pojo.Boy;
+import com.pojo.Car;
 import com.pojo.Greeting;
 import javafx.application.Application;
 import org.junit.Test;
@@ -16,10 +17,13 @@ public class GreetingTest {
         Greeting greeting=(Greeting)txt.getBean("greeting");//括号对应xml配置文件id
         System.out.println(greeting);
 
-        Greeting greeting2=(Greeting)txt.getBean("greeting2");
-        System.out.println(greeting2);
-
-        Boy Boy=(Boy)txt.getBean("gender");
-        System.out.println(Boy);
+//        Greeting greeting2=(Greeting)txt.getBean("greeting2");
+//        System.out.println(greeting2);
+//
+//        Boy Boy=(Boy)txt.getBean("gender");
+//        System.out.println(Boy);
+//
+//        Car car=(Car)txt.getBean("car");
+//        System.out.println(car);
     }
 }

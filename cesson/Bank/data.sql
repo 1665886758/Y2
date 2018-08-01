@@ -1,0 +1,39 @@
+
+DROP  DATABASE IF EXISTS bankonline;
+
+CREATE DATABASE `bankonline`;
+
+USE `bankonline`;
+
+
+DROP TABLE IF EXISTS `account`;
+
+CREATE TABLE `account` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '使用自增赋值',
+  `cardNo` VARCHAR(16) NOT NULL COMMENT '16位数字构成的卡号',
+  `password` VARCHAR(6) NOT NULL COMMENT '6位数字的密码',
+  `balance` DECIMAL(11,2) NOT NULL COMMENT '2位小数',
+  `status` INT(11) NOT NULL COMMENT '1为正常，0为冻结',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cardNo` (`cardNo`)
+) ENGINE=INNODB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='账户信息表';
+
+
+INSERT  INTO `account`(`id`,`cardNo`,`password`,`balance`,`status`) VALUES (1,'1234567891234567','123123','200.00',1),(2,'1234567891234568','123123','300.00',1),(3,'1234567891234569','123123','250.00',0),(4,'1234567891234566','123123','60000.00',1);
+
+
+DROP TABLE IF EXISTS `transactionrecord`;
+
+CREATE TABLE `transactionrecord` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '使用自增赋值',
+  `cardNo` VARCHAR(255) NOT NULL COMMENT '对应account表cardNo',
+  `transactionDate` DATETIME NOT NULL COMMENT '取系统时间',
+  `transactionAmount` DECIMAL(11,2) NOT NULL COMMENT '2位小数',
+  `balance` DECIMAL(11,2) NOT NULL COMMENT '2位小数',
+  `transactionType` VARCHAR(255) NOT NULL COMMENT '存款，取款',
+  `remark` VARCHAR(255) DEFAULT NULL COMMENT '交易的备注',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='交易记录表\r\n';
+
+
+INSERT  INTO `transactionrecord`(`id`,`cardNo`,`transactionDate`,`transactionAmount`,`balance`,`transactionType`,`remark`) VALUES (1,'1234567891234567','2018-07-30 13:49:50','5.00','205.00','取款',NULL),(2,'1234567891234567','2018-07-31 19:50:08','5.00','200.00','取款',NULL),(3,'1234567891234568','2018-07-29 13:50:43','50.00','350.00','存款',NULL),(4,'1234567891234568','2018-07-31 13:51:08','50.00','300.00','取款',NULL),(5,'1234567891234569','2018-07-22 13:52:22','100.00','800.00','存款',NULL),(6,'1234567891234569','2018-07-27 13:52:44','550.00','250.00','取款',NULL),(7,'1234567891234566','2018-07-30 13:53:10','20000.00','60000.00','存款',NULL);

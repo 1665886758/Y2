@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fj.mapper.ProductMapper" >
+
+    <insert id="add" parameterType="com.fj.pojo.Product">
+        insert into product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           <if test="name!=null and name!=''">
+               name,
+           </if>
+            <if test="price!=null">
+                price,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="price!=null">
+                #{name},
+            </if>
+            <if test="price!=null">
+                #{price}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="productInfo" resultType="com.fj.pojo.Product">
+        select * from product
+    </select>
+</mapper>
