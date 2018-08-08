@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fj.mapper.AccountMapper">
+
+    <select id="isExistCardNo" resultType="com.fj.pojo.Account">
+        SELECT * FROM account WHERE cardNo=#{cardNo}
+    </select>
+
+    <select id="isExistCardNoAndPwd" resultType="com.fj.pojo.Account" parameterType="com.fj.pojo.Account">
+      SELECT id,cardNo,password,balance,status FROM account WHERE cardNo=#{cardNo} AND password=#{password}
+    </select>
+
+    <update id="moneyOut">
+        UPDATE account SET balance=balance-#{money} WHERE cardNo=#{cardNo}
+    </update>
+
+
+    <update id="moneyIn">
+        UPDATE account SET balance=balance+#{money} WHERE cardNo=#{tocardNo}
+    </update>
+</mapper>
